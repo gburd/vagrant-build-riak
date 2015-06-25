@@ -45,7 +45,7 @@ This will delete everything -- including your data stored in Riak -- and build f
 
 ## License and Authors
 
-* [Danny Lau](https://github.com/simonvc)
+* [Danny Lau](https://github.com/dannylauca)
 * [Matt Brender](https://github.com/mjbrender)
 
 Copyright (c) 2015 Basho Technologies, Inc.
