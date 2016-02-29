@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
 
 echo "Download Erlang source"
-echo -e "\n\n+++ Download Erlang source +++" >> provision.log
-wget http://s3.amazonaws.com/downloads.basho.com/erlang/$1.tar.gz >> provision.log 2>&1
-
-echo "Untar Erlang source"
-echo -e "\n+++ Untar Erlang source +++" >> provision.log
-tar zxvf $1.tar.gz >> provision.log 2>&1
+echo -e "\n\n+++ Download Basho's Erlang/BEAM source and unarchive it +++" >> provision.log
+wget http://s3.amazonaws.com/downloads.basho.com/erlang/$1.tar.gz  >> provision.log 2>&1
+tar -xvzf $1 >> provision.log 2>&1
+mv OTP_R16B02_basho8 otp_R16B02_basho8
 rm $1.tar.gz
 
 mkdir -p erlmods/beam
 
-cd $1
+echo "Configure build environment"
+echo -e "\n\n+++ Configure build environment +++" >> ../provision.log
+cd otp_R16B02_basho8
 
 echo "Configure build environment"
 echo -e "\n\n+++ Configure build environment +++" >> ../provision.log
+./otp_build autoconf >> ../provision.log 2>&1
 ./configure >> ../provision.log 2>&1
 
 echo "Build Erlang manually from source"
