@@ -42,11 +42,15 @@ This will delete everything -- including your data stored in Riak -- and build f
 
 **TODO** - note that projects that extend on this repository will be linked to in the [vagrant-riak-meta](https://github.com/basho-labs/vagrant-riak-meta). Share them via issues on [the Community repo](https://github.com/basho-labs/the-riak-community)!
 
+## REFERENCES
+* http://www.lucainvernizzi.net/blog/2014/12/03/vagrant-and-libvirt-kvm-qemu-setting-up-boxes-the-easy-way/
 
 ## License and Authors
 
 * [Danny Lau](https://github.com/dannylauca)
 * [Matt Brender](https://github.com/mjbrender)
+* [Greg Burd](https://github.com/gregburd)
+
 
 Copyright (c) 2015 Basho Technologies, Inc.
 
