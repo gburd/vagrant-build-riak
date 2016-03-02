@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 
 echo "Download Erlang source"
 echo -e "\n\n+++ Download Basho's Erlang/BEAM source and unarchive it +++" >> provision.log
-wget http://s3.amazonaws.com/downloads.basho.com/erlang/$1.tar.gz  >> provision.log 2>&1
-tar -xvzf $1 >> provision.log 2>&1
+wget -nv http://s3.amazonaws.com/downloads.basho.com/erlang/$1.tar.gz  >> provision.log 2>&1
+tar -xzf $1.tar.gz >> provision.log 2>&1
 mv OTP_R16B02_basho8 otp_R16B02_basho8
 rm $1.tar.gz
 
