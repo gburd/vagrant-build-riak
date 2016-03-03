@@ -1,11 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-touch provision.log
-chown vagrant provision.log
-chgrp vagrant provision.log
-
-echo "+++ Provision started +++" >> provision.log
-date >> provision.log
+exec 1> >(logger -s -t $(basename $0)) 2>&1
 
 cat <<EOF >> /etc/security/limits.conf
 
@@ -19,23 +14,25 @@ CLIENT_LIBRARY_PATH=~/riak-erlang-client
 PATH=.:~vagrant/riak-$1/dev/dev1/bin:$PATH
 EOF
 
-echo "Install ftp server"
-echo -e "\n\n+++ Install ftp server +++" >> provision.log
-apt-get install vsftpd >> provision.log 2>&1
+apt-get install -y vsftpd openssl libpam0g-dev libssl0.9.8 git
 
-echo "Install Ubuntu dependency packages"
-echo -e "\n\n+++ Install Ubuntu dependency packages +++" >> provision.log
-apt-get install --assume-yes build-essential libncurses5-dev openssl libssl-dev fop xsltproc unixodbc-dev >> provision.log 2>&1
+# Install the build tools (dpkg-dev g++ gcc libc6-dev make)
+apt-get -y install build-essential
 
-echo "Install PAM for Ubuntu"
-echo -e "\n\n+++ Install PAM for Ubuntu +++" >> provision.log
-apt-get install libpam0g-dev >> provision.log 2>&1
+# automatic configure script builder (debianutils m4 perl)
+apt-get -y install autoconf
 
-echo "Install SSL for Ubuntu"
-echo -e "\n\n+++ Install SSL for Ubuntu +++" >> provision.log
-apt-get install libssl0.9.8 >> provision.log 2>&1
+# Needed for HiPE (native code) support, but already installed by autoconf
+apt-get -y install m4
 
-echo "Install Riak dependencies"
-echo -e "\n\n+++ Install Riak dependencies +++" >> provision.log
-apt-get update >> provision.log 2>&1
-apt-get install --assume-yes build-essential libc6-dev-i386 git >> provision.log 2>&1
+# Needed for terminal handling (libc-dev libncurses5 libtinfo-dev libtinfo5 ncurses-bin)
+apt-get -y install libncurses5-dev
+
+# For building with wxWidgets
+#apt-get -y install libwxgtk2.8-dev libgl1-mesa-dev libglu1-mesa-dev libpng3
+
+# For building ssl (libssh-4 libssl-dev zlib1g-dev)
+apt-get -y install libssh-dev
+
+# ODBC support (libltdl3-dev odbcinst1debian2 unixodbc)
+apt-get -y install unixodbc-dev

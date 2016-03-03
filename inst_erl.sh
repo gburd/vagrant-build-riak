@@ -1,7 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-cd $1
+exec 1> >(logger -s -t $(basename $0)) 2>&1
 
-echo "Install Erlang"
-echo -e "\n\n+++ Install Erlang +++" >> ../provision.log
-make install >> ../provision.log 2>&1
+make install
